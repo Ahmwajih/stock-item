@@ -12,6 +12,10 @@ module.exports = {
     },
 
     create: async (req, res) => {
+                  /*
+            #swagger.tags = ["Caregories"]
+            #swagger.summary = "Create simple Brand"
+        */
         const newCategory = new Category(req.body);
         await newCategory.save();
         res.status(201).send({
@@ -23,6 +27,11 @@ module.exports = {
     },
 
     read: async (req, res) => {
+
+        /*
+        #swagger.tags = ["Categories"]
+        #swagger.summary = "Get Single category"
+    */
         const category = await Category.findById(req.params.id);
         res.status(200).send({
             error: false,
@@ -33,6 +42,16 @@ module.exports = {
     },
 
     update: async (req, res) => {
+
+        /*
+        #swagger.tags = ["Categories"]
+        #swagger.summary = "Update Category"
+        #swagger.parameters['body'] = {
+            in: 'body',
+            required: true,
+            schema: { $ref: '#/definitions/categories' }
+        }
+    */
         const category = await Category.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.status(200).send({
             error: false,
@@ -43,6 +62,11 @@ module.exports = {
     },
 
     delete: async (req, res) => {
+
+        /*
+        #swagger.tags = ["Categories"]
+        #swagger.summary = "Delete Category"
+    */
         const category = await Category.findByIdAndDelete(req.params.id);
         res.status(200).send({
             error: false,

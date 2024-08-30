@@ -3,6 +3,7 @@ const Firm = require('../models/firms');
 module.exports = {
     list : async (req, res) => {
             
+    
             const firm = await Firm.find();
             res.status(200).send({
                 error: false,
@@ -14,6 +15,16 @@ module.exports = {
 
 
         create : async (req, res) => {
+            /*
+            #swagger.tags = ['Firms']
+
+            #swagger.summary = 'Create Single firm'
+            #swagger.parameters['body'] = {
+                in: 'body',
+                required: true,
+                schema: { $ref: '#/definitions/firms' }
+            }
+            */
             const newFirm = new Firm(req.body);
             await newFirm.save();
             res.status(201).send({
@@ -26,6 +37,11 @@ module.exports = {
 
 
         read : async (req, res) => {
+            /*
+            #swagger.tags = ['Firms']
+            #swagger.summary = 'Get Single firm'
+            */
+
             const firm = await Firm.findById(req.params.id);
             res.status(200).send({
                 error: false,
@@ -37,6 +53,15 @@ module.exports = {
 
 
         update : async (req, res) => {
+            /*
+            #swagger.tags = ['Firms']
+            #swagger.summary = 'Update Firm'
+            #swagger.parameters['body'] = {
+                in: 'body',
+                required: true,
+                schema: { $ref: '#/definitions/firms' }
+            }
+            */
             const firm = await Firm.findByIdAndUpdate(req.params.id, req.body   , { new: true });
             res.status(200).send({
                 error: false,
@@ -48,6 +73,11 @@ module.exports = {
 
 
         delete : async (req, res) => {
+            /*
+            #swagger.tags = ['Firms']
+            #swagger.summary = 'Delete Firm'
+            */
+           
             const firm = await Firm.findByIdAndDelete(req.params.id);
             res.status(200).send({
                 error: false,

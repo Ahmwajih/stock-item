@@ -13,6 +13,10 @@ module.exports = {
         },
 
         create : async (req, res) => {
+            /*
+                    #swagger.tags = ["Purchases"]
+                    #swagger.summary = "Create Single purchases"
+                */
             const newPurchase = new Purchase(req.body);
             await newPurchase.save();
             res.status(201).send({
@@ -24,6 +28,10 @@ module.exports = {
         },
 
         read : async (req, res) => {
+            /*
+                    #swagger.tags = ["Purchases"]
+                    #swagger.summary = "Get Single purchase"
+                */
             const purchase = await Purchase.findById(req.params.id);
             res.status(200).send({
                 error: false,
@@ -34,6 +42,15 @@ module.exports = {
         },
 
         update : async (req, res) => {
+            /*
+                    #swagger.tags = ["Purchases"]
+                    #swagger.summary = "Update Purchase"
+                    #swagger.parameters['body'] = {
+                        in: 'body',
+                        required: true,
+                        schema: { $ref: '#/definitions/purchases' }
+                    }
+                */
             const purchase = await Purchase.findByIdAndUpdate(req.params.id, req.body   , { new: true });
             res.status(200).send({
                 error: false,
@@ -44,6 +61,10 @@ module.exports = {
         },
 
         delete : async (req, res) => {
+            /*
+                    #swagger.tags = ["Purchases"]
+                    #swagger.summary = "Delete Purchase"
+                */
             const purchase = await Purchase.findByIdAndDelete(req.params.id);
             res.status(200).send({
                 error: false,

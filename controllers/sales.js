@@ -12,6 +12,11 @@ module.exports = {
   },
 
   create: async (req, res) => {
+
+    /*
+            #swagger.tags = ["Sales"]
+            #swagger.summary = "Create Single sale"
+        */
     const newSale = new Sale(req.body);
     await newSale.save();
     res.status(201).send({
@@ -23,6 +28,10 @@ module.exports = {
   },
 
   read: async (req, res) => {
+    /*
+            #swagger.tags = ["Sales"]
+            #swagger.summary = "Get Single sale"
+        */
     const sale = await Sale.findById(req.params.id);
     res.status(200).send({
       error: false,
@@ -33,6 +42,15 @@ module.exports = {
   },
 
   update: async (req, res) => {
+    /*
+            #swagger.tags = ["Sales"]
+            #swagger.summary = "Update Sale"
+            #swagger.parameters['body'] = {
+                in: 'body',
+                required: true,
+                schema: { $ref: '#/definitions/sales' }
+            }
+        */
     const sale = await Sale.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
@@ -45,6 +63,10 @@ module.exports = {
   },
 
   delete: async (req, res) => {
+    /*
+            #swagger.tags = ["Sales"]
+            #swagger.summary = "Delete Sale"
+        */
     const sale = await Sale.findByIdAndDelete(req.params.id);
     res.status(200).send({
       error: false,

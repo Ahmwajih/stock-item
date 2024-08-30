@@ -1,5 +1,8 @@
 const express = require('express');
 const app = express();
+bodyParser = require("body-parser"),
+swaggerJsdoc = require("swagger-jsdoc"),
+swaggerUi = require("swagger-ui-express");
 
 require('dotenv').config();
 const port = process.env.PORT || 3000;
@@ -13,6 +16,8 @@ require('express-async-errors');
 
 app.use(require('./middlewares/errorHandler'));
 app.use(require('./middlewares/filterSort'));
+app.use(require('./middlewares/auth'));
+app.use(require('./middlewares/logger'));
 
 app.use('/', require('./routers/index'));
 

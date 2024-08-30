@@ -13,6 +13,10 @@ module.exports = {
     },
 
     create : async (req, res) => {
+        /*
+            #swagger.tags = ["Users"]
+            #swagger.summary = "Create Single user"
+        */
         const newUser = new User(req.body);
         await newUser.save();
         res.status(201).send({
@@ -24,6 +28,10 @@ module.exports = {
     },
 
     read : async (req, res) => {
+        /*
+            #swagger.tags = ["Users"]
+            #swagger.summary = "Get Single user"
+        */
         const user = await User.findById(req.params.id);
         res.status(200).send({
             error: false,
@@ -34,6 +42,15 @@ module.exports = {
     },
 
     update : async (req, res) => {
+        /*
+            #swagger.tags = ["Users"]
+            #swagger.summary = "Update User"
+            #swagger.parameters['body'] = {
+                in: 'body',
+                required: true,
+                schema: { $ref: '#/definitions/users' }
+            }
+        */
         const user = await User.findByIdAndUpdate(req.params.id, req.body   , { new: true });
         res.status(200).send({
             error: false,
@@ -44,6 +61,10 @@ module.exports = {
     },
 
     delete : async (req, res) => {
+        /*
+            #swagger.tags = ["Users"]
+            #swagger.summary = "Delete User"
+        */
         const user = await User.findByIdAndDelete(req.params.id);
         res.status(200).send({
             error: false,

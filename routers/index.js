@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const Doc = require('./doc')
 
 
 router.get('/' , (req, res) => {
@@ -15,6 +16,9 @@ router.use('/firms', require('./firms'));
 router.use('/purchases', require('./purchases'));
 router.use('/sales', require('./sales'));
 router.use('/brands', require('./brands'));
+router.use('/doc', Doc)
+router.use('/', require('./token'))
+
 
 
 

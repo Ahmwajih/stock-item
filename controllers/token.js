@@ -13,6 +13,12 @@ module.exports = {
         },
 
     create: async (req, res) => {
+
+        /*
+                #swagger.tags = ["Tokens"]
+
+                #swagger.summary = "Create Single token"
+            */
         const newToken = new token(req.body);
         await newToken.save();
         res.status(201).send({
@@ -24,6 +30,11 @@ module.exports = {
     },
 
     read: async (req, res) => {
+            
+                    /*
+                    #swagger.tags = ["Tokens"]
+                    #swagger.summary = "Get Single token"
+                */
         const token = await token.findById(req.params.id);
         res.status(200).send({
             error: false,
@@ -34,6 +45,16 @@ module.exports = {
     },
 
     update: async (req, res) => {
+            
+                /*
+                    #swagger.tags = ["Tokens"]
+                    #swagger.summary = "Update Token"
+                    #swagger.parameters['body'] = {
+                        in: 'body',
+                        required: true,
+                        schema: { $ref: '#/definitions/tokens' }
+                    }
+                */
         const token = await token.findByIdAndUpdate (req.params.id, req.body, { new: true });
         res.status(200).send({
             error: false,
@@ -44,6 +65,10 @@ module.exports = {
     },
 
     delete: async (req, res) => {
+        /*
+            #swagger.tags = ["Tokens"]
+            #swagger.summary = "Delete Token"
+        */
         const token = await token.findByIdAndDelete(req.params.id);
         res.status(200).send({
             error: false,

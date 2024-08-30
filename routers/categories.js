@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const category = require('../controllers/categories');
+const { isActive, isAdmin, isStaff, isLogin } = require('../middlewares/permission');
 
 
 router.route('/')
