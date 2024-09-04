@@ -1,26 +1,21 @@
 const router = require('express').Router();
-const Doc = require('./doc')
+const Doc = require('./doc');
 
-
-router.get('/' , (req, res) => {
+router.get('/', (req, res) => {
     res.status(200).send({
         error: false,
         message: 'Welcome to the API'
-    });});
+    });
+});
 
-router.use('/users', require('./users'));
-router.use('/auth', require('./auth'));
-router.use('/products', require('./products'));
-router.use('/categories', require('./categories'));
-router.use('/firms', require('./firms'));
-router.use('/purchases', require('./purchases'));
-router.use('/sales', require('./sales'));
-router.use('/brands', require('./brands'));
-router.use('/doc', Doc)
-router.use('/', require('./token'))
-
-
-
-
+router.use('/account/users', require('./users'));
+router.use('/account/auth', require('./auth'));
+router.use('/stock/products', require('./products'));
+router.use('/stock/categories', require('./categories'));
+router.use('/stock/firms', require('./firms'));
+router.use('/stock/purchases', require('./purchases'));
+router.use('/stock/sales', require('./sales'));
+router.use('/stock/brands', require('./brands'));
+router.use('/doc', Doc);
 
 module.exports = router;

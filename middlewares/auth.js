@@ -1,16 +1,27 @@
-const Token = require('../models/token');
+// and set the req.user property to the user object
 
-module.exports = async (req, res, next) => {
-    const auth = req.headers.authorization;
-    const tokenkey =  auth ?  auth.split(' ') : null; // get token from header authorization value
+// require JWT
+const jwt = require('jsonwebtoken')
 
-    if (tokenkey) {
-        if(tokenkey[0] == 'Token'){
-            const tokenData = await Token.findOne({ token: tokenkey[1] }).populate('userId'); // populate userId from token collection with user collection 
-req.user = tokenData ? tokenData.userId : false;
- 
-        }
+module.exports = (req, res, next) => {
+    const auth = req.headers?.authorization || null
+    const accessToken = auth ? auth.split(' ')[1] : null // get rid of the Bearer keyword
+
+    // verify the token:
+    if (accessToken) {
+        jwt.verify(accessToken, process.env.ACCESS_KEY, (err, tokenData) => {
+            req.user = tokenData || 'not authenticated'
+            // add createdID for req.body:
+            req.body.createdId = req.user?._id
+
+            if(tokenData) console.log("USER AUTHENTICATED WITH JWT!")
+            console.log(req.user)
+        })
+
+    } else {
+        req.user = 'not authenticated'
+        console.log(`user = ${req.user}`)
     }
-    next();
 
+    next()
 }

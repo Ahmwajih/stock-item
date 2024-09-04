@@ -12,7 +12,7 @@ type: String,
 required: true,
 trim: true
 },
-adress: {
+address: {
 type: String,
 required: true,
 trim: true

@@ -27,6 +27,7 @@ const saleSchema = new mongoose.Schema({
         type: Number,
         required: true,
         index: true
+        // 
     },
     price: {
         type: Number,

@@ -17,14 +17,24 @@ module.exports = {
                     #swagger.tags = ["Purchases"]
                     #swagger.summary = "Create Single purchases"
                 */
-            const newPurchase = new Purchase(req.body);
-            await newPurchase.save();
-            res.status(201).send({
-                error: false,
-                message: 'Purchase created',
-                data: newPurchase,
-                details: await res.getModelListDetails(Purchase)
-            });
+                    const data = await Purchase.create(req.body)
+
+                    const updateProducts = await Product.updateOne({_id: data.productId }, { $inc: { quantity: +data.quantity}})
+                    // $inc is a mongoDB operator that increments the value of the field by the specified amount.
+            
+                    res.status(201).send({
+                        error: false,
+                        data
+                    })
+            
+            // const newPurchase = new Purchase(req.body);
+            // await newPurchase.save();
+            // res.status(201).send({
+            //     error: false,
+            //     message: 'Purchase created',
+            //     data: newPurchase,
+            //     details: await res.getModelListDetails(Purchase)
+            // });
         },
 
         read : async (req, res) => {

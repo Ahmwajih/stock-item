@@ -50,7 +50,12 @@ module.exports = {
           res.send({
             error: false,
             token: setToken(user),
-          });
+            // create current user for react app
+            user: {
+              id: user._id,
+              username: user.username,
+              email: user.email
+          }})
         } else {
           res.status(401).send({
             error: true,

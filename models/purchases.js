@@ -34,6 +34,7 @@ const purchaseSchema = new mongoose.Schema({
         type: Number,
         required: true,
         index: true
+        // when i add quantity it will be added to the priceTotal and the general quantity will be added to the quantity
     },
     price : {
         type: Number,
@@ -42,7 +43,6 @@ const purchaseSchema = new mongoose.Schema({
     },
     priceTotal : {
         type: Number,
-        required: true,
         index: true,
         default: 0,
         set: function (value) {

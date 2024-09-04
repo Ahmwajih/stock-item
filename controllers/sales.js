@@ -17,14 +17,35 @@ module.exports = {
             #swagger.tags = ["Sales"]
             #swagger.summary = "Create Single sale"
         */
-    const newSale = new Sale(req.body);
-    await newSale.save();
-    res.status(201).send({
-      error: false,
-      message: "Sale created",
-      data: newSale,
-      details: await res.getModelListDetails(Sale),
-    });
+
+            req.body.userId = req.user._id;
+            const currentProduct = await Product.findOne({_id: req.body.productId});
+            if (currentProduct.quantity < req.body.quantity) {
+                return res.status(400).send({
+                    error: true,
+                    message: 'Quantity not available',
+                    details: await res.getModelListDetails(Sale)
+                });
+            }    else {
+             const data = await Sale.create(req.body);
+             // increment the value in MangoDb  by the quantity of the product
+             const updatedProduct = await Sale.findByIdAndUpdate({_id: data.productId}, {quantity: currentProduct.quantity + data.quantity}, {new: true});
+
+             res.status(201).send({
+                 error: false,
+                 message: 'Sale created',
+                 data: data,
+                 details: await res.getModelListDetails(Sale)
+             });
+         } 
+    // const newSale = new Sale(req.body);
+    // await newSale.save();
+    // res.status(201).send({
+    //   error: false,
+    //   message: "Sale created",
+    //   data: newSale,
+    //   details: await res.getModelListDetails(Sale),
+    // });
   },
 
   read: async (req, res) => {
